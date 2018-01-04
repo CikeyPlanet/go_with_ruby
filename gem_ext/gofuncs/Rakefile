@@ -1,0 +1,17 @@
+require "bundler/gem_tasks"
+require "rspec/core/rake_task"
+
+RSpec::Core::RakeTask.new(:spec)
+
+require "rake/extensiontask"
+
+task :build => :compile
+
+spec = eval File.read('gofuncs.gemspec')
+Rake::ExtensionTask.new("gofuncs") do |ext|
+  ext.lib_dir = "lib/gofuncs"
+  ext.ext_dir = "ext/gofuncs"
+  ext.source_pattern = "*.{c,cpp,go}"
+end
+
+task :default => [:clobber, :compile, :spec]

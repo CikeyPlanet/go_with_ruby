@@ -1,3 +1,0 @@
-source "https://rubygems.org"
-
-gem "gofuncs", path: "/Users/cikey/Projects/go/src/github.com/CikeyPlanet/go_with_ruby/gem_ext/gofuncs"
