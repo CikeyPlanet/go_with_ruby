@@ -1,0 +1,17 @@
+PATH
+  remote: gofuncs
+  specs:
+    gofuncs (0.1.2)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  gofuncs!
+
+BUNDLED WITH
+   1.16.0
