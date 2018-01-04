@@ -1,4 +1,4 @@
 require 'benchmark'
 require 'gofuncs'
 
-puts Benchmark.measure{Gofuncs.fibonacci(20)}
+puts Benchmark.measure{Gofuncs.fibonacci(10)}

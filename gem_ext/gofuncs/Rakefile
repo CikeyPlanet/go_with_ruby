@@ -1,17 +1,29 @@
-require "bundler/gem_tasks"
-require "rspec/core/rake_task"
+require 'rake/clean'
 
-RSpec::Core::RakeTask.new(:spec)
+EXT_CONF = 'ext/gofuncs/extconf.rb'
+MAKEFILE = 'ext/gofuncs/Makefile'
+MODULE = 'ext/gofuncs/main.so'
+SRC = Dir.glob('ext/gofuncs/*.c')
+SRC << MAKEFILE
 
-require "rake/extensiontask"
+CLEAN.include [ 'ext/gofuncs/*.o', MODULE ]
+CLOBBER.include [ 'config.save', 'ext/gofuncs/mkmf.log', 'ext/gofuncs/extconf.h', MAKEFILE ]
 
-task :build => :compile
-
-spec = eval File.read('gofuncs.gemspec')
-Rake::ExtensionTask.new("gofuncs") do |ext|
-  ext.lib_dir = "lib/gofuncs"
-  ext.ext_dir = "ext/gofuncs"
-  ext.source_pattern = "*.{c,cpp,go}"
+file MAKEFILE => EXT_CONF do |t|
+    Dir::chdir(File::dirname(EXT_CONF)) do
+        unless sh "ruby #{File::basename(EXT_CONF)}"
+            $stderr.puts "Failed to run extconf"
+            break
+        end
+    end
 end
-
-task :default => [:clobber, :compile, :spec]
+file MODULE => SRC do |t|
+    Dir::chdir(File::dirname(EXT_CONF)) do
+        unless sh "make"
+            $stderr.puts "make failed"
+            break
+        end
+    end
+end
+desc "Build the native library"
+task :build => MODULE

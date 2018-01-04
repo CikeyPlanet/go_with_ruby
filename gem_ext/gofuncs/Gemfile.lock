@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     gofuncs (0.1.2)
+      ffi (= 1.9.18)
 
 GEM
   remote: https://rubygems.org/
@@ -30,7 +31,6 @@ PLATFORMS
 
 DEPENDENCIES
   bundler (~> 1.16)
-  ffi (= 1.9.18)
   gofuncs!
   rake (~> 10.0)
   rake-compiler (~> 0)
